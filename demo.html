@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enigma's Echo // Automated Demonstration Console</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Outfit:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .demo-badge {
+            background-color: var(--amber-glow);
+            color: var(--bg-dark);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            text-shadow: none;
+            box-shadow: 0 0 8px var(--amber-dim);
+            animation: pulse-fast 1s infinite alternate;
+        }
+        @keyframes pulse-fast {
+            from { opacity: 0.7; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body class="crt-theme">
+    <!-- CRT Screen Filters -->
+    <div class="crt-overlay"></div>
+    <div class="crt-scanlines"></div>
+
+    <div class="app-container">
+        <!-- Header Console Status -->
+        <header class="console-header">
+            <div class="header-logo">
+                <span class="pulse-indicator"></span>
+                <h1>ENIGMA'S ECHO <span class="demo-badge">AUTOMATED DEMO</span></h1>
+            </div>
+            <div class="header-status">
+                <span class="status-item">LOC: <span class="highlight">BLETCHLEY PARK (HUT 8)</span></span>
+                <span class="status-item">YEAR: <span class="highlight">1941</span></span>
+                <span class="status-item">MODE: <span class="highlight">SIMULATION</span></span>
+            </div>
+        </header>
+
+        <main class="console-grid">
+            <!-- Left Panel: Briefings -->
+            <section class="panel glass-panel narrative-panel">
+                <div class="panel-header">
+                    <h2>DEMO BRIEFING</h2>
+                    <span class="panel-subtitle">Simulation Feed</span>
+                </div>
+                <div class="panel-body">
+                    <div class="story-container">
+                        <p id="level-story">Initializing automated demonstration sequences...</p>
+                    </div>
+                    <div class="objective-box">
+                        <h3>DECIPHER OBJECTIVE:</h3>
+                        <p id="level-objective">Analyzing current objective...</p>
+                    </div>
+                    <div class="level-select">
+                        <h3>CHOOSE OPERATION:</h3>
+                        <div class="level-buttons" id="level-selector">
+                            <!-- Populated via Javascript -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Middle Panel: Rotors and Displays -->
+            <section class="panel glass-panel core-panel">
+                <div class="panel-header">
+                    <h2>BOMBE ANALYZER</h2>
+                    <span class="panel-subtitle">Mechanical Rotor Array</span>
+                </div>
+                <div class="panel-body machine-body">
+                    <!-- Rotors Visualization -->
+                    <div class="rotors-container">
+                        <div class="rotor" id="rotor-1">
+                            <div class="rotor-label">ROTOR I</div>
+                            <div class="rotor-window"><span id="rotor-1-val">A</span></div>
+                            <div class="rotor-arrow-up">▲</div>
+                            <div class="rotor-arrow-down">▼</div>
+                        </div>
+                        <div class="rotor" id="rotor-2">
+                            <div class="rotor-label">ROTOR II</div>
+                            <div class="rotor-window"><span id="rotor-2-val">A</span></div>
+                            <div class="rotor-arrow-up">▲</div>
+                            <div class="rotor-arrow-down">▼</div>
+                        </div>
+                        <div class="reflector">
+                            <div class="reflector-label">REFLECTOR</div>
+                            <div class="reflector-status">B</div>
+                        </div>
+                    </div>
+
+                    <!-- Cipher Input & Output Boxes -->
+                    <div class="data-displays">
+                        <div class="display-box">
+                            <div class="box-label">INTERCEPTED CIPHERTEXT:</div>
+                            <div class="text-display code-font" id="ciphertext-display">No transmission.</div>
+                        </div>
+                        <div class="display-box">
+                            <div class="box-label">PROCESSED PLAINTEXT OUTPUT:</div>
+                            <div class="text-display code-font success-text" id="plaintext-display">No output.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Logs -->
+            <section class="panel glass-panel history-panel">
+                <div class="panel-header">
+                    <h2>CO-PROCESSOR TRANSLATIONS</h2>
+                    <span class="panel-subtitle">Signal Log</span>
+                </div>
+                <div class="panel-body log-body">
+                    <div class="terminal-log" id="terminal-log">
+                        <div class="log-entry system-msg">[SYSTEM] Bletchley Bomb Co-Processor Ready.</div>
+                        <div class="log-entry hint-msg">[DEMO] Automated gameplay will execute step-by-step. Sit back and observe!</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer Input console -->
+        <footer class="console-footer">
+            <div class="input-prompt">CO-PROCESSOR&gt;</div>
+            <input type="text" id="console-input" class="code-font" placeholder="Simulated player typing..." autocomplete="off" disabled>
+            <button id="submit-btn" disabled>COMPILE</button>
+            <div class="footer-actions">
+                <button id="sound-toggle" class="footer-btn">🔊 SOUND ON</button>
+                <a href="index.html" class="footer-btn" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">🎮 PLAY GAME</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Victory Modal -->
+    <div class="modal" id="victory-modal">
+        <div class="modal-content glass-panel success-border">
+            <div class="panel-header">
+                <h2>DECRYPTION VERIFIED</h2>
+            </div>
+            <div class="panel-body victory-body">
+                <div class="success-icon">🎖️</div>
+                <p id="victory-text">Excellent work! The decrypted signal matches our intelligence archives.</p>
+                <button id="next-level-btn" class="primary-btn">NEXT OPERATION</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="demo.js?v=2"></script>
+</body>
+</html>
